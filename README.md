@@ -14,7 +14,13 @@
 
     브라우저로 사설망이나 테스트넷의 이더리움 블록체인에 연결해 스마트 계약 배포와 테스트를 할 수 있다.
 
-    [Klayton IDE](https://ide.klaytn.foundation/#optimize=false&runs=200&evmVersion=london&version=soljson-v0.8.7+commit.e28d00a7.js)
+    [Klayton IDE](https://ide.klaytn.foundation/#optimize=false&runs=200&evmVersion=london&version=soljson-v0.8.7+commit.e28d00a7.js) / [NPM 설치](https://www.npmjs.com/package/@remix-project/remixd)
+
+    ```zsh
+     remixd -s . --remix-ide https://ide.klaytn.foundation/
+    ```
+
+    remixd 설치 후 해당 URL을 연결하면 로컬의 있는 소스코드를 IDE에서 편집 및 테스트가 가능하다.
 
 3.  `openzepplin`
 
@@ -29,3 +35,7 @@
         caver-js는 개발자가 HTTP 또는 웹소켓 연결을 사용하여 Klaytn 노드와 상호작용할 수 있도록 하는 자바스크립트 API 라이브러리입니다. npm 이용이 가능합니다.
 
     스마트 컨트랙트와 dApp을 연결해주는 라이브러리.
+
+5.  `kaikas 지갑`
+
+        Kaikas(카이카스)는 PC 웹 브라우저 확장 프로그램 형태의 글로벌 디지털 자산 지갑입니다. 퍼블릭 블록체인 플랫폼인 Klaytn(클레이튼) 기반의 디지털 자산을 관리할 수 있습니다
