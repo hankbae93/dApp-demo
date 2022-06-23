@@ -43,6 +43,11 @@
         Kaikas(카이카스)는 PC 웹 브라우저 확장 프로그램 형태의 글로벌 디지털 자산 지갑입니다.
         퍼블릭 블록체인 플랫폼인 Klaytn(클레이튼) 기반의 디지털 자산을 관리할 수 있습니다
 
+6.  `Smart Contract`
+
+        자바로 구성된 서버 어플리케이션은 배포 후에도 수정할 수 있지만
+        기본적으로 이미 블록 체인에 배포 된 스마트 컨트랙트는 변경될 수 없다(immutable)
+
 <br />
 
 # Smart Contract - NFT
@@ -64,3 +69,28 @@ NFT 메타데이터를 작성하는 표준 방안.
     데이터를 조각조각으로 잘게 나눠서 빠른 속도로 가져온 후 하나로 합쳐서 보여주는 방식으로 작동한다.
     해시 테이블은 정보를 키와 값의 쌍(key/value pairs)으로 저장하는데, 전 세계 수많은 분산화된 노드들이
     해당 정보를 저장하기 때문에 사용자는 IPFS를 사용함으로써 기존 HTTP 방식에 비해 훨씬 빠른 속도로 데이터를 저장하고 가져올 수 있다.
+
+<br/>
+
+# Contracts Method
+
+<img src="./docs/cont1.png" />
+
+remixd에서 테스트해보던 컨트렉트들의 메소드들을 똑같이 웹에서 실행하면 된다!
+
+```ts
+const onClickMint = async () => {
+	const response = await caver.klay.sendTransaction({
+		type: "SMART_CONTRACT_EXECUTION",
+		from: account,
+		to: MINT_GEM_TOKEN_ADDRESS,
+		value: caver.utils.convertToPeb(1, "KLAY"),
+		gas: "3000000",
+		data: mintGemTokenContract.methods.mintGemToken().encodeABI(),
+	});
+
+	if (response) {
+		mintGemTokenContract.methods.getLatestMintedGemToken(account).call();
+	}
+};
+```

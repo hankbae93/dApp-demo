@@ -1,5 +1,3 @@
-node_modules
-artifacts
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -28,8 +26,10 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env
 .env*.local
 
 # vercel
 .vercel
+
+# typescript
+*.tsbuildinfo
