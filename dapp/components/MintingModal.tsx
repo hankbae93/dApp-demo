@@ -15,15 +15,20 @@ import { FC } from "react";
 import { MINT_GEM_TOKEN_ADDRESS } from "../caverConfig";
 import { useAccount, useCaver, useMetadata } from "../hooks";
 import { GemTokenData } from "../interfaces";
+import GemCard from "./GemCard";
 
 interface MintingModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	// getRemainGemTokens: () => Promise<void>;
+	getRemainGemTokens: () => Promise<void>;
 	// getGemTokenCount: () => Promise<void>;
 }
 
-const MintingModal: FC<MintingModalProps> = ({ isOpen, onClose }) => {
+const MintingModal: FC<MintingModalProps> = ({
+	isOpen,
+	onClose,
+	getRemainGemTokens,
+}) => {
 	const { account } = useAccount();
 	const { caver, mintGemTokenContract, saleGemTokenContract } = useCaver();
 	const { metadataURI, getMetadata } = useMetadata();
@@ -52,6 +57,8 @@ const MintingModal: FC<MintingModalProps> = ({ isOpen, onClose }) => {
 					latestMintedGemToken.gemTokenRank,
 					latestMintedGemToken.gemTokenType
 				);
+
+				getRemainGemTokens();
 			}
 
 			console.log(response);
@@ -59,7 +66,6 @@ const MintingModal: FC<MintingModalProps> = ({ isOpen, onClose }) => {
 			console.error(error);
 		}
 	};
-	console.log(metadataURI);
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -68,9 +74,15 @@ const MintingModal: FC<MintingModalProps> = ({ isOpen, onClose }) => {
 				<ModalHeader>Minting</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
-					<Text>
-						민팅하실? <b>fee: 1 KLAY</b>
-					</Text>
+					{metadataURI ? (
+						<Flex justify={"center"}>
+							<GemCard metadataURI={metadataURI} />
+						</Flex>
+					) : (
+						<Text>
+							민팅하실? <b>fee: 1 KLAY</b>
+						</Text>
+					)}
 				</ModalBody>
 
 				<ModalFooter>

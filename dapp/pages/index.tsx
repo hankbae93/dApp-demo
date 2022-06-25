@@ -21,13 +21,42 @@ import { useCaver } from "../hooks";
 
 const Home: NextPage = () => {
 	const [remainGemTokens, setRemainGemTokens] = useState<number>(0);
-	const [gemTokenCount, setGemTokenCount] = useState<string[][] | undefined>(
-		undefined
-	);
+	const [gemTokenCount, setGemTokenCount] = useState<string[][] | undefined>();
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const { mintGemTokenContract } = useCaver();
+
+	const getRemainGemTokens = async () => {
+		try {
+			if (!mintGemTokenContract) return;
+
+			const response = await mintGemTokenContract.methods.totalSupply().call();
+
+			setRemainGemTokens(1000 - parseInt(response, 10));
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const getGemTokenCount = async () => {
+		try {
+			if (!mintGemTokenContract) return;
+
+			const response = await mintGemTokenContract.methods
+				.getGemTokenCount()
+				.call();
+			console.log(response);
+			setGemTokenCount(response);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	useEffect(() => {
+		getRemainGemTokens();
+		getGemTokenCount();
+	}, [mintGemTokenContract]);
 
 	return (
 		<>
@@ -86,7 +115,11 @@ const Home: NextPage = () => {
 					Minting
 				</Button>
 			</Flex>
-			<MintingModal isOpen={isOpen} onClose={onClose} />
+			<MintingModal
+				isOpen={isOpen}
+				onClose={onClose}
+				getRemainGemTokens={getRemainGemTokens}
+			/>
 		</>
 	);
 };
